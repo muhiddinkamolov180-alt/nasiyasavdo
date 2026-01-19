@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kichik Magazin Boshqaruv Tizimi</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="./style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-store-alt"></i>
+                    <h1>Kichik Magazin Boshqaruv Tizimi</h1>
+                </div>
+                <p class="subtitle">To‑Do va Nasiya Savdo nazorati</p>
+            </div>
+            
+            <div class="stats">
+                <div class="stat-card">
+                    <i class="fas fa-tasks"></i>
+                    <div>
+                        <h3 id="totalTasks">0</h3>
+                        <p>Jami Vazifalar</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-hand-holding-usd"></i>
+                    <div>
+                        <h3 id="totalDebt">0 so'm</h3>
+                        <p>Jami Nasiya</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-users"></i>
+                    <div>
+                        <h3 id="totalCustomers">0</h3>
+                        <p>Nasiya Mijozlar</p>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="main">
+            <section class="card todo-section">
+                <div class="card-header">
+                    <h2><i class="fas fa-list-check"></i> To‑Do Ro'yxati</h2>
+                    <div class="card-actions">
+                        <button class="btn btn-filter" id="filterAll">Hammasi</button>
+                        <button class="btn btn-filter" id="filterPending">Bajarilmagan</button>
+                        <button class="btn btn-filter" id="filterCompleted">Bajarilgan</button>
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <input type="text" id="todoInput" placeholder="Yangi vazifa nomini kiriting..." />
+                    <button class="btn btn-primary" onclick="addTodo()">
+                        <i class="fas fa-plus"></i> Qo'shish
+                    </button>
+                </div>
+                
+                <div class="list-container">
+                    <ul id="todoList"></ul>
+                    <div class="empty-state" id="todoEmptyState">
+                        <i class="fas fa-clipboard-list"></i>
+                        <p>Hozircha vazifalar yo'q. Yangi vazifa qo'shing!</p>
+                    </div>
+                </div>
+                
+                <div class="card-footer">
+                    <p>Jami: <span id="todoCount">0</span> ta vazifa</p>
+                    <button class="btn btn-clear" onclick="clearCompleted()">
+                        <i class="fas fa-trash"></i> Bajarilganlarni o'chirish
+                    </button>
+                </div>
+            </section>
+
+            <section class="card debt-section">
+                <div class="card-header">
+                    <h2><i class="fas fa-credit-card"></i> Nasiya Savdo</h2>
+                    <div class="card-actions">
+                        <button class="btn btn-filter" id="sortByDate">Sana bo'yicha</button>
+                        <button class="btn btn-filter" id="sortByAmount">Summa bo'yicha</button>
+                    </div>
+                </div>
+                
+                <div class="debt-form">
+                    <div class="form-row">
+                        <div class="input-group">
+                            <label for="customer"><i class="fas fa-user"></i> Mijoz Ismi</label>
+                            <input type="text" id="customer" placeholder="Mijoz ismini kiriting" />
+                        </div>
+                        <div class="input-group">
+                            <label for="product"><i class="fas fa-box"></i> Mahsulot</label>
+                            <input type="text" id="product" placeholder="Mahsulot nomi" />
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="input-group">
+                            <label for="qty"><i class="fas fa-hashtag"></i> Miqdor</label>
+                            <input type="number" id="qty" min="1" placeholder="0" />
+                        </div>
+                        <div class="input-group">
+                            <label for="price"><i class="fas fa-money-bill-wave"></i> Narx (so'm)</label>
+                            <input type="number" id="price" min="0" placeholder="0" />
+                        </div>
+                        <div class="input-group">
+                            <label for="dueDate"><i class="fas fa-calendar"></i> Qaytarish sanasi</label>
+                            <input type="date" id="dueDate" />
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-primary btn-large" onclick="addDebt()">
+                        <i class="fas fa-save"></i> Nasiyani Saqlash
+                    </button>
+                </div>
+                
+                <div class="list-container">
+                    <ul id="debtList"></ul>
+                    <div class="empty-state" id="debtEmptyState">
+                        <i class="fas fa-file-invoice-dollar"></i>
+                        <p>Hozircha nasiya savdolar yo'q. Yangi nasiya qo'shing!</p>
+                    </div>
+                </div>
+                
+                <div class="card-footer">
+                    <p>Jami nasiya: <span id="debtTotalAmount">0</span> so'm | <span id="debtCount">0</span> ta mijoz</p>
+                    <button class="btn btn-clear" onclick="clearPaidDebts()">
+                        <i class="fas fa-check-circle"></i> To'langanlarni o'chirish
+                    </button>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <i class="fas fa-store-alt"></i>
+                    <div>
+                        <h3>Kichik Magazin Tizimi</h3>
+                        <p>To‑Do va Nasiya Savdo nazorati</p>
+                    </div>
+                </div>
+                <p class="copyright">© 2026 Kichik Magazin Tizimi | JavaScript CRUD Loyihasi</p>
+                <div class="footer-links">
+                    <a href="#"><i class="fas fa-question-circle"></i> Yordam</a>
+                    <a href="#"><i class="fas fa-cog"></i> Sozlamalar</a>
+                    <a href="#"><i class="fas fa-download"></i> Ma'lumotlarni Yuklab Olish</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <div class="modal" id="confirmationModal">
+        <div class="modal-content">
+            <h3><i class="fas fa-exclamation-triangle"></i> O'chirishni Tasdiqlash</h3>
+            <p id="modalMessage">Haqiqatan ham o'chirmoqchimisiz?</p>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" onclick="closeModal()">Bekor qilish</button>
+                <button class="btn btn-danger" id="confirmDelete">O'chirish</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="./script.js"></script>
+</body>
+</html>

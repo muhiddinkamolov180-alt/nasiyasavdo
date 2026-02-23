@@ -1,4 +1,3 @@
-// DOM Elements
 const todoInput = document.getElementById('todoInput');
 const todoList = document.getElementById('todoList');
 const todoEmptyState = document.getElementById('todoEmptyState');
